@@ -14,7 +14,20 @@ jwt_secret = "${base64:32}"
 [config]
 env = [
   "ENTE_API_HOST=${api_domain}",
-  "DB_PASSWORD=${db_password}"
+  "DB_PASSWORD=${db_password}",
+  "api_domain=${api_domain}",
+  "web_domain=${web_domain}",
+  "s3_key=${s3_key}",
+  "s3_secret=${s3_secret}",
+  "s3_endpoint=${s3_endpoint}",
+  "s3_region=${s3_region}",
+  "s3_bucket=${s3_bucket}",
+  "ENTE_APPS_PUBLIC_ALBUMS=https://${web_domain}",
+  "ENTE_APPS_CAST=https://${web_domain}",
+  "ENTE_APPS_PUBLIC_LOCKER=https://${web_domain}",
+  "ENTE_APPS_PUBLIC_PASTE=https://${web_domain}",
+  "ENTE_APPS_EMBED_ALBUMS=https://${web_domain}",
+  "ENTE_APPS_ACCOUNTS=https://${web_domain}"
 ]
 
 [[config.domains]]

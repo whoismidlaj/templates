@@ -13,7 +13,15 @@ env = [
   "ENTE_API_HOST=${api_domain}",
   "DB_PASSWORD=${db_password}",
   "MINIO_ROOT_USER=${minio_user}",
-  "MINIO_ROOT_PASSWORD=${minio_pass}"
+  "MINIO_ROOT_PASSWORD=${minio_pass}",
+  "api_domain=${api_domain}",
+  "web_domain=${web_domain}",
+  "ENTE_APPS_PUBLIC_ALBUMS=https://${web_domain}",
+  "ENTE_APPS_CAST=https://${web_domain}",
+  "ENTE_APPS_PUBLIC_LOCKER=https://${web_domain}",
+  "ENTE_APPS_PUBLIC_PASTE=https://${web_domain}",
+  "ENTE_APPS_EMBED_ALBUMS=https://${web_domain}",
+  "ENTE_APPS_ACCOUNTS=https://${web_domain}"
 ]
 
 [[config.domains]]
