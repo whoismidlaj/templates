@@ -17,14 +17,7 @@ services:
     expose:
       - "8080"
 
-  # Resolve "localhost:3200" in the ente container to the minio container.
-  socat:
-    image: alpine/socat
-    restart: always
-    network_mode: service:ente
-    depends_on:
-      - ente
-    command: "TCP-LISTEN:3200,fork,reuseaddr TCP:minio:3200"
+
 
   web:
     image: ghcr.io/ente-io/web:latest

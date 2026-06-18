@@ -4,6 +4,7 @@ web_domain = "${domain}"
 db_password = "${password:24}"
 minio_user = "${username}"
 minio_pass = "${password:24}"
+s3_endpoint = "http://minio:3200"
 key_encryption = "${base64:32}"
 key_hash = "${base64:64}"
 jwt_secret = "${base64:32}"
@@ -16,6 +17,7 @@ env = [
   "MINIO_ROOT_PASSWORD=${minio_pass}",
   "api_domain=${api_domain}",
   "web_domain=${web_domain}",
+  "s3_endpoint=${s3_endpoint}",
   "ENTE_APPS_PUBLIC_ALBUMS=https://${web_domain}",
   "ENTE_APPS_CAST=https://${web_domain}",
   "ENTE_APPS_PUBLIC_LOCKER=https://${web_domain}",
@@ -51,20 +53,20 @@ s3:
       b2-eu-cen:
          key: ${minio_user}
          secret: ${minio_pass}
-         endpoint: localhost:3200
+         endpoint: ${s3_endpoint}
          region: eu-central-2
          bucket: b2-eu-cen
       wasabi-eu-central-2-v3:
          key: ${minio_user}
          secret: ${minio_pass}
-         endpoint: localhost:3200
+         endpoint: ${s3_endpoint}
          region: eu-central-2
          bucket: wasabi-eu-central-2-v3
          compliance: false
       scw-eu-fr-v3:
          key: ${minio_user}
          secret: ${minio_pass}
-         endpoint: localhost:3200
+         endpoint: ${s3_endpoint}
          region: eu-central-2
          bucket: scw-eu-fr-v3
 
