@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  ente-s3:
+    image: ghcr.io/ente-io/server:latest
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ../files/museum.yaml:/museum.yaml:ro
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/ping"]
+      interval: 60s
+      timeout: 5s
+      retries: 3
+      start_period: 120s
+    expose:
+      - "8080"
+
+  web:
+    image: ghcr.io/ente-io/web:latest
+    restart: always
+    environment:
+      - ENTE_API_ORIGIN=https://${ENTE_API_HOST}
+    expose:
+      - "3000"
+
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      - POSTGRES_USER=pguser
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=ente_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -q -d ente_db -U pguser"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:

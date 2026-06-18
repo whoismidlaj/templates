@@ -1,0 +1,78 @@
+[variables]
+api_domain = "${domain}"
+web_domain = "${domain}"
+db_password = "${password:24}"
+s3_key = "Fill S3 Access Key"
+s3_secret = "Fill S3 Secret Key"
+s3_endpoint = "Fill S3 Endpoint"
+s3_region = "Fill S3 Region"
+s3_bucket = "Fill S3 Bucket Name"
+key_encryption = "${base64:32}"
+key_hash = "${base64:64}"
+jwt_secret = "${base64:32}"
+
+[config]
+env = [
+  "ENTE_API_HOST=${api_domain}",
+  "DB_PASSWORD=${db_password}"
+]
+
+[[config.domains]]
+serviceName = "ente-s3"
+port = 8_080
+host = "${api_domain}"
+
+[[config.domains]]
+serviceName = "web"
+port = 3_000
+host = "${web_domain}"
+
+[[config.mounts]]
+serviceName = "ente-s3"
+filePath = "museum.yaml"
+content = """
+db:
+      host: postgres
+      port: 5432
+      name: ente_db
+      user: pguser
+      password: ${db_password}
+
+s3:
+      are_local_buckets: false
+      use_path_style_urls: true
+      b2-eu-cen:
+         key: ${s3_key}
+         secret: ${s3_secret}
+         endpoint: ${s3_endpoint}
+         region: ${s3_region}
+         bucket: ${s3_bucket}
+      wasabi-eu-central-2-v3:
+         key: ${s3_key}
+         secret: ${s3_secret}
+         endpoint: ${s3_endpoint}
+         region: ${s3_region}
+         bucket: ${s3_bucket}
+         compliance: false
+      scw-eu-fr-v3:
+         key: ${s3_key}
+         secret: ${s3_secret}
+         endpoint: ${s3_endpoint}
+         region: ${s3_region}
+         bucket: ${s3_bucket}
+
+apps:
+    public-albums: https://${web_domain}
+    cast: https://${web_domain}
+    public-locker: https://${web_domain}
+    public-paste: https://${web_domain}
+    embed-albums: https://${web_domain}
+    accounts: https://${web_domain}
+
+key:
+      encryption: ${key_encryption}
+      hash: ${key_hash}
+
+jwt:
+      secret: ${jwt_secret}
+"""

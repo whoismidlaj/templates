@@ -2171,6 +2171,42 @@
     ]
   },
   {
+    "id": "ente",
+    "name": "ente",
+    "version": "latest",
+    "description": "An open-source, end-to-end encrypted alternative to Google Photos and Apple Photos (includes MinIO local S3 storage).",
+    "logo": "logo.png",
+    "links": {
+      "github": "https://github.com/ente-io/ente",
+      "website": "https://ente.io",
+      "docs": "https://help.ente.io/self-hosting/"
+    },
+    "tags": [
+      "photos",
+      "cloud-storage",
+      "privacy",
+      "security"
+    ]
+  },
+  {
+    "id": "ente-s3",
+    "name": "ente-s3",
+    "version": "latest",
+    "description": "An open-source, end-to-end encrypted alternative to Google Photos and Apple Photos (configured for external S3 storage).",
+    "logo": "logo.png",
+    "links": {
+      "github": "https://github.com/ente-io/ente",
+      "website": "https://ente.io",
+      "docs": "https://help.ente.io/self-hosting/"
+    },
+    "tags": [
+      "photos",
+      "cloud-storage",
+      "privacy",
+      "security"
+    ]
+  },
+  {
     "id": "erpnext",
     "name": "ERPNext",
     "version": "version-15",

@@ -1,0 +1,77 @@
+[variables]
+api_domain = "${domain}"
+web_domain = "${domain}"
+db_password = "${password:24}"
+minio_user = "${username}"
+minio_pass = "${password:24}"
+key_encryption = "${base64:32}"
+key_hash = "${base64:64}"
+jwt_secret = "${base64:32}"
+
+[config]
+env = [
+  "ENTE_API_HOST=${api_domain}",
+  "DB_PASSWORD=${db_password}",
+  "MINIO_ROOT_USER=${minio_user}",
+  "MINIO_ROOT_PASSWORD=${minio_pass}"
+]
+
+[[config.domains]]
+serviceName = "ente"
+port = 8_080
+host = "${api_domain}"
+
+[[config.domains]]
+serviceName = "web"
+port = 3_000
+host = "${web_domain}"
+
+[[config.mounts]]
+serviceName = "ente"
+filePath = "museum.yaml"
+content = """
+db:
+      host: postgres
+      port: 5432
+      name: ente_db
+      user: pguser
+      password: ${db_password}
+
+s3:
+      are_local_buckets: true
+      use_path_style_urls: true
+      b2-eu-cen:
+         key: ${minio_user}
+         secret: ${minio_pass}
+         endpoint: localhost:3200
+         region: eu-central-2
+         bucket: b2-eu-cen
+      wasabi-eu-central-2-v3:
+         key: ${minio_user}
+         secret: ${minio_pass}
+         endpoint: localhost:3200
+         region: eu-central-2
+         bucket: wasabi-eu-central-2-v3
+         compliance: false
+      scw-eu-fr-v3:
+         key: ${minio_user}
+         secret: ${minio_pass}
+         endpoint: localhost:3200
+         region: eu-central-2
+         bucket: scw-eu-fr-v3
+
+apps:
+    public-albums: https://${web_domain}
+    cast: https://${web_domain}
+    public-locker: https://${web_domain}
+    public-paste: https://${web_domain}
+    embed-albums: https://${web_domain}
+    accounts: https://${web_domain}
+
+key:
+      encryption: ${key_encryption}
+      hash: ${key_hash}
+
+jwt:
+      secret: ${jwt_secret}
+"""
